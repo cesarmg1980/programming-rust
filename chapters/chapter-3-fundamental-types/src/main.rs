@@ -1,11 +1,35 @@
+
 fn main() {
+    example_fundamental_types();
+    example_fixed_width_numeric_types();    
+    example_checked_wrapping_saturating_and_overflowing_arithmetic();
+    example_floating_point_types();
+}
+
+fn build_vector_typed() -> Vec<i16> {
+    let mut v: Vec<i16> = Vec::<i16>::new();
+    v.push(10i16);
+    v.push(20i16);
+    v
+}
+
+fn build_vector_not_typed() -> Vec<i16>{
+    let mut v = Vec::new();
+    v.push(10);
+    v.push(20);
+    v
+}
+
+fn example_fundamental_types() {
     println!("Chapter 3: Fundamental Types");
     println!("* You can explicitly type everything");
     println!("Printing Vector from 'build_vector_typed' --> {:?}", build_vector_typed());
     println!("* Or if the type is obvious you can leave the typing out");
     println!("Printing Vector from 'build_vector_not_typed' --> {:?}", build_vector_not_typed());
     assert_eq!(build_vector_typed(), build_vector_not_typed());
+}
 
+fn example_fixed_width_numeric_types() {
     println!();
     println!("Convert from one integer type to another");
     println!("10_i8 as u16 to 10_u16 --> in range");
@@ -48,16 +72,48 @@ fn main() {
 
 }
 
-fn build_vector_typed() -> Vec<i16> {
-    let mut v: Vec<i16> = Vec::<i16>::new();
-    v.push(10i16);
-    v.push(20i16);
-    v
+fn example_checked_wrapping_saturating_and_overflowing_arithmetic() {
+    println!();
+    println!("Checked");
+    println!("The sum of 10 and 20 can be represented as a u8");
+    println!("assert_eq!(10_u8.checked_add(20), Some(30))");
+    assert_eq!(10_u8.checked_add(20), Some(30));
+    println!("The sum of 100 and 200 cannot");
+    println!("assert_eq!(100_u8.checked_add(200), None)");
+    assert_eq!(100_u8.checked_add(200), None);
+    println!("Wrapping");
+    println!("The first product can be represented as u16");
+    println!("The second cannot");
+    println!("assert_eq!(100_u16.wrapping_mul(200), 20000)");
+    println!("assert_eq!(500_u16.wrapping_mul(500), 53392)");
+    assert_eq!(100_u16.wrapping_mul(200), 20000);
+    assert_eq!(500_u16.wrapping_mul(500), 53392);
+    println!("Operations on signed types may wrap to negative values");
+    println!("assert_eq!(500_i16.wrapping_mul(500), -12144)");
+    assert_eq!(500_i16.wrapping_mul(500), -12144);
+    println!("Saturating");
+    println!("assert_eq!(32760_i16.saturating_add(10), 32767)");
+    assert_eq!(32760_i16.saturating_add(10), 32767);
+    println!("Overflowing");
+    println!("assert_eq!(255_u8.overflowing_sub(2), (253, false))");
+    println!("assert_eq!(255_u8.overflowing_add(2), (1, true))");
+    assert_eq!(255_u8.overflowing_sub(2), (253, false));
+    assert_eq!(255_u8.overflowing_add(2), (1, true));
 }
 
-fn build_vector_not_typed() -> Vec<i16>{
-    let mut v = Vec::new();
-    v.push(10);
-    v.push(20);
-    v
+fn example_floating_point_types() {
+    println!();
+    println!("Floating Point Types");
+    println!("assert_eq!((-1. / f32::INFINITY).is_sign_negative())");
+    assert!((-1. / f32::INFINITY).is_sign_negative());
+    println!("assert_eq!(-f32.MIN, f32::MAX)");
+    assert_eq!(-f32::MIN, f32::MAX);
+    println!("assert_eq!(5f32.sqrt() * 5f32.sqrt(), 5)");
+    assert_eq!(5f32.sqrt() * 5f32.sqrt(), 5.);
+    println!("assert_eq!((-1.01f64).floor(), -2.0)");
+    assert_eq!((-1.01f64).floor(), -2.0);
+    println!("println!('{{}}', (2.0_f64).sqrt())");
+    println!("{}", (2.0_f64).sqrt());
+    println!("println!('{{}}', f64::sqrt(2.0))");
+    println!("{}", f64::sqrt(2.0));
 }
