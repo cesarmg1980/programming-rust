@@ -85,7 +85,7 @@ Character literals are characters enclosed in single quotes like '8' or '!', you
 You need to excape certain special characters:
 
 | Character       | Rust character literal |
-|------------------------------------------|
+|-----------------|------------------------|
 | Single quote    | '\''                   |
 | Backslash       | '\\'                   |
 | Newline         | '\n'                   |
