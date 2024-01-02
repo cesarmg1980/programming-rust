@@ -45,8 +45,63 @@ These integer arithmetic methods fall into 4 categories *see code examples*:
 ### Floating-Point Types.
 
 Every part of a floating point number after the integer part is optional, but at least one of the fractional part, exponent or type suffix must be present, `5.` is a valid floating-point number.
-The types `f32` and `f64` have constants associated like `INFINITY` `NEG_INFINITY`, `NAN` `MIN` and `MAX`.
+The types `f32` and `f64` have constants associated like `INFINITY` `NEG_INFINITY`, `NAN`, `MIN` and `MAX`.
 
 The `f32` and `f64` comes with a lot of methods for mathematical operations for example `2f64.sqrt()`.
 The `std::f32::const` and `std::f64::const` comes with known constants like `PI` or `E`.
 
+### The bool type 
+
+Rust is very strict, control structures require that their conditions are `bool` expressions.
+
+```
+if x != 0 { ...  }
+```
+not simply
+
+```
+if x { ...  }
+```
+
+Ruts's `as` operator can convert `bool` values to integer types.
+
+```
+assert_eq!(false as i32, 0);
+assert_eq!(true as i32, 1);
+```
+
+**But** it won't convert in the other direction
+
+Although `bool` only needs 1 bit, Rust will use an entire byte so you can create a pointer to it.
+
+### Characters
+
+Rust's type `char` represents a single Unicode character, as a 32 bit value.
+
+Rust uses the `char` type for single characters, but uses UTF-8 enconding for strings and streams of text
+
+Character literals are characters enclosed in single quotes like '8' or '!', you can also use the full breadth of Unicode
+
+You need to excape certain special characters:
+
+| Character       | Rust character literal |
+|------------------------------------------|
+| Single quote    | '\''                   |
+|------------------------------------------|
+| Backslash       | '\\'                   |
+| Newline         | '\n'                   |
+| Carriage Return | '\r'                   |
+| Tab             | '\t'                   |
+
+You can write a character's unicode code point in hexadecimal if you prefer:
+
+* If the character is in the range U+0000 to U+007F (The ASCII character set) you can write '\xHH' where HH is a 2 digit hexadecimal number.
+* You could also write '\u{HHHHHH}' where HHHHHH is a six-digit long hexadecimal number.
+* Rust never converts implicitly between `char` and any other type.
+* You can use `as` to convert to integer type.
+
+The `u8` is the **only** type the operator `as` will convert to `char`, types other than `u8` will include values that are not permitted as a char.
+
+The standard library `std:char::from_u32` takes any `u32` value and returns an `Option<char>`: if the `u32` is not an allowed Unicode code point then `from_u32` returns `None`, otherwise it returns `Some(c)` where `c` is the `char` result.
+
+### Tuples
