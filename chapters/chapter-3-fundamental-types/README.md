@@ -87,7 +87,6 @@ You need to excape certain special characters:
 | Character       | Rust character literal |
 |------------------------------------------|
 | Single quote    | '\''                   |
-|------------------------------------------|
 | Backslash       | '\\'                   |
 | Newline         | '\n'                   |
 | Carriage Return | '\r'                   |
