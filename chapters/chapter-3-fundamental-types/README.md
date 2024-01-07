@@ -104,3 +104,60 @@ The `u8` is the **only** type the operator `as` will convert to `char`, types ot
 The standard library `std:char::from_u32` takes any `u32` value and returns an `Option<char>`: if the `u32` is not an allowed Unicode code point then `from_u32` returns `None`, otherwise it returns `Some(c)` where `c` is the `char` result.
 
 ### Tuples
+
+A Tuple is a pair, a tripe, a quadruple... etc.
+You can write a tuple a sequence of elements separated by commans and surrounded by parenthesis, for example `("Argentina", 1980)`.
+Given a tuple `t` you can access the tuple by `t.1` `t.2` and so on.
+You **cannot** access tuple's element by doing `t.i` or `t[i]`
+Rust sometimes uses tuples to return multiple values from a function, for example:
+```
+fn split_at(&self, mid: usize) -> (&str, &str)
+```
+The above returns a tuple of two `&str` (string slices)
+
+*See the example on how this function is used*
+
+The other commonly used tuple type is the zero-tuple `()` traditionally called the `unit type`
+
+### Pointer Types
+
+Rust has several types that represents memory addresses.
+
+* References
+* Boxes
+* Raw Pointers
+
+
+#### References
+
+A value of `&String` (pronounced 'ref String') is a reference to a `String` value.
+The expression `&x` produces a reference to `x` in Rust terminology we say that "it borrows a reference to x".
+Given a reference `r` `*r` is the value `r` points to (just like C)
+Unlike C pointers, Rust references are **never** null, there's no way to produce a null reference in safe Rust.
+Rust tracks ownership and lifetime of values, things like dangling pointers are catched at compile time.
+
+Rust references comes in 2 flavors:
+
+* `&T` --> an inmmutable shared reference, you can have many shared references to a given value but they're **read only**, modifying the value they point to is forbidden, it's like `const T*` in C.
+* `&mut T` --> a mutable **exclusive** reference, you can read and modify the value it points to, but for **as long as the reference exists** you cannot have another reference of any kind to that value.
+
+The above is called "multiple readers **or** single writers" you cannot have both
+
+#### Boxes
+
+Is what you can use to allocate a value in the Heap.
+This is accomplished by doing `Box::new`
+
+```
+let t = (12, "eggs");
+let b = Box::new(t); // allocate a tuple in the heap
+```
+
+The type of `t` is `(i32, &str)` so the value of `b` is `Box<(i32, &str)`
+When `b` goes out of scope the memory allocated is freed immediately **unless `b` has been moved**
+
+
+#### Raw Pointers 
+
+Raw pointers are just like regular pointers in C, using a raw pointer is unsafe, because **Rust makes no effort to track what it points to** 
+You may only dereference raw pointer inside an `unsafe block`

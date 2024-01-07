@@ -4,6 +4,7 @@ fn main() {
     example_fixed_width_numeric_types();    
     example_checked_wrapping_saturating_and_overflowing_arithmetic();
     example_floating_point_types();
+    example_tuples();
 }
 
 fn build_vector_typed() -> Vec<i16> {
@@ -116,4 +117,15 @@ fn example_floating_point_types() {
     println!("{}", (2.0_f64).sqrt());
     println!("println!('{{}}', f64::sqrt(2.0))");
     println!("{}", f64::sqrt(2.0));
+}
+
+fn example_tuples() {
+    println!();
+    println!("Tuples");
+    let text = "I see the eigenvalue in thine eye";
+    let (head, tail) = text.split_at(21);
+    println!("assert_eq!(head, 'I see the igenvalue ')");
+    assert_eq!(head, "I see the eigenvalue ");
+    println!("assert_eq!(tail, 'in thine eye')");
+    assert_eq!(tail, "in thine eye");
 }
