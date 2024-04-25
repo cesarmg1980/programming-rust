@@ -161,3 +161,39 @@ When `b` goes out of scope the memory allocated is freed immediately **unless `b
 
 Raw pointers are just like regular pointers in C, using a raw pointer is unsafe, because **Rust makes no effort to track what it points to** 
 You may only dereference raw pointer inside an `unsafe block`
+
+### Array, Vectors and Slices
+
+Rust had 3 types for representing a sequence of values in memory
+
+- The type `[T; N]`: This is an `array` of `N` values of type `T`, the array size is a constant determined at compile time, you **cannot** add new elements or shrink an array.
+- The type `Vec<T` called a `vector of T's`: Is **dynamically** allocated, it's a growable sequence of elements of type `T`, the vector's elements live **on the heap**.
+- The types `&[T]` and `&mut[T]` called a **shared slice of T's** and **mutable slice of T's**: These are reference to a series of elements that live somewhere else, it's like a pointer to its first element
+  - A mutable slice `&mut[T]` can be read and modify its elements **but i cannot be shared**
+  - A shared slice `&[T]` can be shared among several readers, but it **cannot be modified**
+
+Given a value `v` of any of these 3 types, the expression `v.len()` gives the number of elements, `v[i]` refers to the `ith` element.
+`i` **must** be of `usize`, you cannot use any other type as an index.
+
+### Arrays
+
+The simplest way to write an array is within brackets:
+
+```
+let lazy_caterer: [u32; 6] = [1, 2, 3, 4, 5, 6];
+let taxonomy = ["Animalia", "Arthropoda", "Insecta"];
+```
+
+You'll see this sintax for fixed-length buffers: `[0u8, 1024]` can be a one kilobyte buffer filled with zeroes
+
+An array's length is part of its type and fixed at compile time, if `n` is variable you **cannot** do `[true; n]` to get an array of `n` elements.
+
+If you need an array whose length varies **don't use an array use a vector instead**.
+
+The usual methods that you'd see on arrays -iterating, searching, sorting, etc- are all methods provided on `slices` not on `arrays` but Rust implicitly converts a reference to an array into a slice
+
+```
+let mut chaos = [3, 5, 4, 1, 2];
+chaos.sort();
+assert_eq!(chaos, [1, 2, 3, 4, 5]);
+```

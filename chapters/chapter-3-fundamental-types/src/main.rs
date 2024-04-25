@@ -1,10 +1,10 @@
-
 fn main() {
     example_fundamental_types();
     example_fixed_width_numeric_types();    
     example_checked_wrapping_saturating_and_overflowing_arithmetic();
     example_floating_point_types();
     example_tuples();
+    arrays();
 }
 
 fn build_vector_typed() -> Vec<i16> {
@@ -128,4 +128,36 @@ fn example_tuples() {
     assert_eq!(head, "I see the eigenvalue ");
     println!("assert_eq!(tail, 'in thine eye')");
     assert_eq!(tail, "in thine eye");
+}
+
+fn arrays() {
+    println!();
+    println!("Arrays");
+    let lazy_caterer: [u32; 6] = [1, 2, 3, 4, 5, 6];
+    let taxonomy = ["Animalia", "Arthropoda", "Insecta"];
+
+    assert_eq!(lazy_caterer[3], 4);
+    assert_eq!(taxonomy.len(), 3);
+    println!("assert_eq!(lazy_caterer[3], 4)");
+    println!("assert_eq!(taxonomy.len(), 3)");
+
+    let mut sieve = [true; 10000];
+    for i in 2..100 {
+        if sieve[i] {
+            let mut j = i * i;
+            while j < 10000 {
+                sieve[j] = false;
+                j += i;
+            }
+        }
+    }
+    assert!(sieve[211]);
+    assert!(!sieve[9876]);
+    println!("assert!(sieve[211])");
+    println!("assert!(!sieve[9876])");
+    
+    let mut chaos = [3, 5, 4, 1, 2];
+    chaos.sort();
+    assert_eq!(chaos, [1, 2, 3, 4, 5]);
+    println!("assert_eq!(chaos, [1, 2, 3, 4, 5])")
 }
