@@ -167,7 +167,7 @@ You may only dereference raw pointer inside an `unsafe block`
 Rust had 3 types for representing a sequence of values in memory
 
 - The type `[T; N]`: This is an `array` of `N` values of type `T`, the array size is a constant determined at compile time, you **cannot** add new elements or shrink an array.
-- The type `Vec<T` called a `vector of T's`: Is **dynamically** allocated, it's a growable sequence of elements of type `T`, the vector's elements live **on the heap**.
+- The type `Vec<T>` called a `vector of T's`: Is **dynamically** allocated, it's a growable sequence of elements of type `T`, the vector's elements live **on the heap**.
 - The types `&[T]` and `&mut[T]` called a **shared slice of T's** and **mutable slice of T's**: These are reference to a series of elements that live somewhere else, it's like a pointer to its first element
   - A mutable slice `&mut[T]` can be read and modify its elements **but i cannot be shared**
   - A shared slice `&[T]` can be shared among several readers, but it **cannot be modified**
@@ -197,3 +197,62 @@ let mut chaos = [3, 5, 4, 1, 2];
 chaos.sort();
 assert_eq!(chaos, [1, 2, 3, 4, 5]);
 ```
+
+### Vectors 
+
+A `Vec[T]` is a resizable array of elements of type `T` allocated no the **heap**.
+
+There are multiple ways to create vectors
+
+- Using the `vec!` macro
+
+```
+let mut primes = vec![2, 3, 5, 7];
+assert_eq!(primes.iter().product::<i32>(), 210);
+```
+
+We can add elements to a Vector
+
+``` 
+primes.push(11);
+primes.push(13);
+assert_eq!(primes.iter().product<i32>(), 30030);
+```
+
+We can also populate a Vector by repeating a given value, in this example all zeroes * (row * col)
+
+``` 
+fn new_pixel_buffer(rows: usize, cols: usize) -> () {
+    vec![0, rows * cols];
+}
+```
+
+The `vec!` macro is equivalent to call `Vec::new`
+
+``` 
+let mut pal = Vec::new();
+pal.push("step");
+pal.push("on");
+pal.push("no");
+pal.push("pets");
+assert_eq!(pal, vec!["step", "on", "no", "pets"]);
+println!("assert_eq!(pal, vec!['step', 'on', 'no', 'pets'])");
+```
+
+We can also build a vector from the values given by an iterator 
+
+```
+let v: Vec<i32> = (0..5).collect();
+assert_eq!(v, [0, 1, 2, 3, 4]);
+```
+
+`Vec` is an essential type to Rust 
+
+A `Vec<T>` consists of 3 values:
+- A pointer to the head-allocated buffer.
+- The # of elements that that buffer can stored
+- The actual # of elements that the Vec is currently holding.
+
+If you know the # of elements in advance you can use `Vec::with_capacity`
+
+

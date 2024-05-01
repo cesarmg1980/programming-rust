@@ -5,6 +5,7 @@ fn main() {
     example_floating_point_types();
     example_tuples();
     arrays();
+    vectors();
 }
 
 fn build_vector_typed() -> Vec<i16> {
@@ -159,5 +160,52 @@ fn arrays() {
     let mut chaos = [3, 5, 4, 1, 2];
     chaos.sort();
     assert_eq!(chaos, [1, 2, 3, 4, 5]);
-    println!("assert_eq!(chaos, [1, 2, 3, 4, 5])")
+    println!("assert_eq!(chaos, [1, 2, 3, 4, 5])");
+}
+
+fn vectors() {
+    println!();
+    println!("Vectors");
+    let mut primes = vec![2, 3, 5, 7];
+    assert_eq!(primes.iter().product::<i32>(), 210);
+    println!("assert_eq!(primes.iter().product::<i32>(), 210)");
+
+    primes.push(11);
+    primes.push(13);
+    assert_eq!(primes.iter().product::<i32>(), 30030);
+    println!("assert_eq!(primes.iter().product<i32>(), 30030)");
+
+    let mut pal = Vec::new();
+    pal.push("step");
+    pal.push("on");
+    pal.push("no");
+    pal.push("pets");
+    assert_eq!(pal, vec!["step", "on", "no", "pets"]);
+    println!("assert_eq!(pal, vec!['step', 'on', 'no', 'pets'])");
+
+    let v: Vec<i32> = (0..5).collect();
+    assert_eq!(v, [0, 1, 2, 3, 4]);
+    println!("assert_eq!(v, [0, 1, 2, 3, 4])");
+
+    let mut v = Vec::with_capacity(2);
+    assert_eq!(v.len(), 0);
+    assert_eq!(v.capacity(), 2);
+    println!("assert_eq!(v.len(), 0)");
+    println!("assert_eq!(v.capacity(), 2)");
+
+    v.push(1);
+    v.push(2);
+    assert_eq!(v.len(), 2);
+    assert_eq!(v.capacity(), 2);
+    println!("assert_eq!(v.len(), 2)");
+    println!("assert_eq!(v.capacity(), 2)");
+    
+    v.push(3);
+    assert_eq!(v.len(), 3);
+    println!("assert_eq!(v.len(), 3)");
+    println!("capacity is now {}", v.capacity());
+}
+
+fn new_pixel_buffer(rows: usize, cols: usize) -> () {
+    vec![0, rows * cols];
 }
